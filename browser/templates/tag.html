@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ name }}</h1>
+<div id='photos'>
+{% for id, comment in photos %}
+    <table>
+        <tr>
+            <td><a href='/photo/{{ id }}/'><img src='/render/{{ id }}/thumbnail/'></a></td>
+        </tr>
+        <tr>
+            <td>{{ comment }}</td>
+        </tr>
+    </table>
+{% endfor %}
+</div>
+{% endblock %}

@@ -7,6 +7,8 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^render/(?P<photo_id>\d+)/$', 'render.views.raw'),
     url(r'^render/(?P<photo_id>\d+)/thumbnail/$', 'render.views.thumbnail'),
+    url(r'^$', 'browser.views.tag_list'),
+    url(r'^tag/(?P<tag_id>\d+)/$', 'browser.views.tag'),
     # Examples:
     # url(r'^$', 'fspot_browser.views.home', name='home'),
     # url(r'^fspot_browser/', include('fspot_browser.foo.urls')),

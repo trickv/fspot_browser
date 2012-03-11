@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% load tag_tree %}
+{% block content %}
+<h1>Photo Browser</h1>
+<p>Pick a tag:</p>
+<p><ul>{{ tree|tag_tree }}</ul></p>
+{% endblock %}
