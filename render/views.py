@@ -4,7 +4,7 @@ import os
 
 from django.http import HttpResponse
 
-import models
+import fspot.models as models
 
 def raw(request, photo_id):
     filename = models.get_photo_filename(photo_id)
