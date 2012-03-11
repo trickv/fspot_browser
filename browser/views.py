@@ -15,7 +15,6 @@ def _get_subtags(tag_id):
     return tree
 
 def tag_list(request):
-    tree = [{1:'States'}, [{2:'Kansas'}, [{40:'Lawrence'}, {41:'Tpoka'}], {21:'Illinois'}]]
     tree = _get_subtags(0)
     return render_to_response('tag_list.html', { 'tree': tree })
 
@@ -27,6 +26,7 @@ def tag(request, tag_id):
 def photo(request, photo_id):
     photo = models.get_photo_object(photo_id)
     exif = render.utils.get_exif(photo['filename'])
-    exif.pop('MakerNote')
+    if exif.has_key('MakerNote'):
+        exif.pop('MakerNote')
     photo['exif'] = exif
     return render_to_response('photo.html', {'photo':photo})
