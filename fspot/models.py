@@ -32,3 +32,9 @@ def get_photos_with_tag(tag_id):
     for row in c:
         photos.append({row[0]:row[4]})
     return photos
+
+def get_photo_object(photo_id):
+    c = db.cursor()
+    c.execute("SELECT * FROM photos WHERE id = ?", (photo_id,))
+    row = c.fetchone()
+    return {'id':photo_id, 'filename':get_photo_filename(photo_id), 'description':row[4]}
