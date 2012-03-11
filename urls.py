@@ -1,10 +1,12 @@
 from django.conf.urls.defaults import patterns, include, url
 
 # Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
+from django.contrib import admin
+admin.autodiscover()
 
 urlpatterns = patterns('',
+    url(r'^render/(?P<photo_id>\d+)/$', 'render.views.raw'),
+    url(r'^render/(?P<photo_id>\d+)/thumbnail/$', 'render.views.thumbnail'),
     # Examples:
     # url(r'^$', 'fspot_browser.views.home', name='home'),
     # url(r'^fspot_browser/', include('fspot_browser.foo.urls')),
