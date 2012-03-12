@@ -59,6 +59,8 @@ def scale(request, photo_id, request_width):
 
 def _rotate_to_exif(image):    
     exif = utils._get_exif_for_image(image)
+    if not exif.has_key('Orientation'):
+        return image
     orientation = exif['Orientation']
     if orientation == 6:
         image = image.rotate(270)
