@@ -11,6 +11,8 @@ urlpatterns = patterns('',
     url(r'^$', 'browser.views.tag_list'),
     url(r'^tag/(?P<tag_id>\d+)/$', 'browser.views.tag'),
     url(r'^photo/(?P<photo_id>\d+)/$', 'browser.views.photo'),
+    url(r'^time/$', 'browser.views.time'),
+    url(r'^time/month/(?P<year>\d+)-(?P<month>\d+)/$', 'browser.views.time_month'),
     # Examples:
     # url(r'^$', 'fspot_browser.views.home', name='home'),
     # url(r'^fspot_browser/', include('fspot_browser.foo.urls')),

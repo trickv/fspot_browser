@@ -1,3 +1,5 @@
+import datetime
+
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 
@@ -30,3 +32,23 @@ def photo(request, photo_id):
         exif.pop('MakerNote')
     photo['exif'] = exif
     return render_to_response('photo.html', {'photo':photo})
+
+def _yearmonth_list():
+    start = models.get_earliest_time()
+    end = models.get_newest_time()
+    year = start.year
+    month = start.month
+    list = []
+    while True:
+        list.append(datetime.datetime(year, month, 1))
+        month += 1
+        if month > 12:
+            month = 1
+            year += 1
+        if year > end.year or (year >= end.year and month > end.month):
+            break
+    return list
+
+def time(request):
+    list = _yearmonth_list()
+    return render_to_response('time.html', {'months':list})

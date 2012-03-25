@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<p>Pick a month:</p>
+<p><ul>
+{% for month in months %}
+    <li><a href='/time/month/{{ month|date:"Y-m" }}/'>{{ month|date:"Y-m" }}</li>
+{% endfor %}
+{% endblock %}

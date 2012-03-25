@@ -1,3 +1,4 @@
+import datetime
 import sqlite3
 from django.db import models
 
@@ -38,3 +39,15 @@ def get_photo_object(photo_id):
     c.execute("SELECT * FROM photos WHERE id = ?", (photo_id,))
     row = c.fetchone()
     return {'id':photo_id, 'filename':get_photo_filename(photo_id), 'description':row[4]}
+
+def get_earliest_time():
+    c = db.cursor()
+    c.execute("SELECT MIN(time) FROM photos")
+    row = c.fetchone()
+    return datetime.datetime.fromtimestamp(row[0])
+
+def get_newest_time():
+    c = db.cursor()
+    c.execute("SELECT MAX(time) FROM photos")
+    row = c.fetchone()
+    return datetime.datetime.fromtimestamp(row[0])
