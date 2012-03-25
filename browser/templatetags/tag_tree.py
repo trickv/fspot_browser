@@ -8,27 +8,10 @@ register = template.Library()
 def tag_tree(value, autoescape=None):
     """
     Portions of this function are taken from django/template/defaultfilters.py
-    and are under whatever license that file is under.
-    """
-    """
-    Recursively takes a self-nested list and returns an HTML unordered list --
-    WITHOUT opening and closing <ul> tags.
+    Based on the django stock filter unordered_list but hacked to work for key+value pairs.
 
-    The list is assumed to be in the proper format. For example, if ``var``
-    contains: ``['States', ['Kansas', ['Lawrence', 'Topeka'], 'Illinois']]``,
-    then ``{{ var|unordered_list }}`` would return::
-
-        <li>States
-        <ul>
-                <li>Kansas
-                <ul>
-                        <li>Lawrence</li>
-                        <li>Topeka</li>
-                </ul>
-                </li>
-                <li>Illinois</li>
-        </ul>
-        </li>
+    Items are assumed to be dictionaries.  So it looks like:
+    [{10:'A tag'}, [{100:'A subtag'}, {200:'Another subtag'}], {20:'Another tag'}]
     """
     if autoescape:
         from django.utils.html import conditional_escape
