@@ -23,7 +23,7 @@ def tag_list(request):
 def tag(request, tag_id):
     photos = models.get_photos_with_tag(tag_id)
     name = models.get_tag_name(tag_id)
-    return render_to_response('tag.html', {'name':name, 'photos':photos})
+    return render_to_response('photo_list.html', {'name':name, 'photos':photos})
 
 def photo(request, photo_id):
     photo = models.get_photo_object(photo_id)
