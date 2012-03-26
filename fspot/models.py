@@ -2,6 +2,8 @@ import datetime
 import sqlite3
 from django.db import models
 
+##### DEPRECATED
+# These functions should be replaced with querying the models themselves.
 db = sqlite3.connect('db/photos.db')
 
 def get_photo_filename(photo_id):
@@ -66,3 +68,76 @@ def get_newest_time():
     c.execute("SELECT MAX(time) FROM photos")
     row = c.fetchone()
     return datetime.datetime.fromtimestamp(row[0])
+
+####### END OF DEPRECATED FUNCTIONS
+
+class Export(models.Model):
+    id = models.IntegerField(primary_key=True)
+    image_id = models.IntegerField()
+    image_version_id = models.IntegerField()
+    export_type = models.TextField()
+    export_token = models.TextField()
+    class Meta:
+        db_table = u'exports'
+
+class Jobs(models.Model):
+    id = models.IntegerField(primary_key=True)
+    job_type = models.TextField()
+    job_options = models.TextField()
+    run_at = models.IntegerField(null=True, blank=True)
+    job_priority = models.IntegerField()
+    class Meta:
+        db_table = u'jobs'
+
+class Meta(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.TextField(unique=True)
+    data = models.TextField(blank=True)
+    class Meta:
+        db_table = u'meta'
+
+class PhotoVersion(models.Model):
+    """
+    Django 1.3 does not support primary keys across multiple fields.
+    Thus, we can't properly relate this to the Photo model as the table
+    exists from F-Spot.
+    """
+    photo_id = models.IntegerField()
+    version_id = models.IntegerField()
+    name = models.TextField(blank=True)
+    base_uri = models.TextField()
+    filename = models.TextField()
+    import_md5 = models.TextField(blank=True)
+    protected = models.BooleanField()
+    class Meta:
+        db_table = u'photo_versions'
+
+class Roll(models.Model):
+    id = models.IntegerField(primary_key=True)
+    time = models.IntegerField()
+    class Meta:
+        db_table = u'rolls'
+
+class Tag(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.TextField(unique=True, blank=True)
+    category_id = models.IntegerField(null=True, blank=True)
+    is_category = models.BooleanField()
+    sort_priority = models.IntegerField(null=True, blank=True)
+    icon = models.TextField(blank=True)
+    class Meta:
+        db_table = u'tags'
+
+class Photo(models.Model):
+    id = models.IntegerField(primary_key=True)
+    time = models.IntegerField()
+    base_uri = models.TextField()
+    filename = models.TextField()
+    description = models.TextField()
+    roll = models.ForeignKey(Roll)
+    default_version_id = models.IntegerField()
+    rating = models.IntegerField(null=True, blank=True)
+    tags = models.ManyToManyField(Tag, db_table='photo_tags')
+    class Meta:
+        db_table = u'photos'
+
