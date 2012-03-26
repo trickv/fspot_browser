@@ -12,7 +12,7 @@ urlpatterns = patterns('',
     url(r'^tag/(?P<tag_id>\d+)/$', 'browser.views.tag'),
     url(r'^photo/(?P<photo_id>\d+)/$', 'browser.views.photo'),
     url(r'^time/$', 'browser.views.time'),
-    url(r'^time/month/(?P<year>\d+)-(?P<month>\d+)/$', 'browser.views.time_month'),
+    url(r'^time/month/(?P<year_int>\d+)-(?P<month_int>\d+)/$', 'browser.views.month'),
     # Examples:
     # url(r'^$', 'fspot_browser.views.home', name='home'),
     # url(r'^fspot_browser/', include('fspot_browser.foo.urls')),

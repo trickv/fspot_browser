@@ -25,6 +25,14 @@ def tag(request, tag_id):
     name = models.get_tag_name(tag_id)
     return render_to_response('photo_list.html', {'name':name, 'photos':photos})
 
+def month(request, year_int, month_int):
+    year_int = int(year_int)
+    month_int = int(month_int)
+    month = datetime.date(year_int, month_int, 1)
+    photos = models.get_photos_with_month(month)
+    name = "%d-%d" % (year_int, month_int)
+    return render_to_response('photo_list.html', {'name':name, 'photos':photos})
+
 def photo(request, photo_id):
     photo = models.get_photo_object(photo_id)
     exif = render.utils.get_exif(photo['filename'])

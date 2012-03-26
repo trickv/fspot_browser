@@ -34,6 +34,21 @@ def get_photos_with_tag(tag_id):
         photos.append({row[0]:row[4]})
     return photos
 
+def get_photos_with_month(month):
+    next_month_year = month.year
+    if month.month == 12:
+        next_month_year += 1
+        next_month_month = 1
+    else:
+        next_month_month = month.month + 1
+    next_month = datetime.date(next_month_year, next_month_month, 1)
+    c = db.cursor()
+    c.execute("SELECT * FROM photos WHERE time BETWEEN ? AND ? ORDER BY time ASC", (month.strftime("%s"), next_month.strftime("%s")))
+    photos = []
+    for row in c:
+        photos.append({row[0]:row[4]})
+    return photos
+
 def get_photo_object(photo_id):
     c = db.cursor()
     c.execute("SELECT * FROM photos WHERE id = ?", (photo_id,))
