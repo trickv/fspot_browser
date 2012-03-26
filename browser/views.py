@@ -48,7 +48,10 @@ def _yearmonth_list():
     month = start.month
     list = []
     while True:
-        list.append(datetime.datetime(year, month, 1))
+        month_datetime = datetime.datetime(year, month, 1)
+        photo_count = len(models.get_photos_with_month(month_datetime))
+        if photo_count > 0:
+            list.append((month_datetime, photo_count, ))
         month += 1
         if month > 12:
             month = 1
@@ -58,5 +61,5 @@ def _yearmonth_list():
     return list
 
 def time(request):
-    list = _yearmonth_list()
-    return render_to_response('time.html', {'months':list})
+    month_list = _yearmonth_list()
+    return render_to_response('time.html', {'months':month_list})

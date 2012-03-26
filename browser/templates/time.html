@@ -2,7 +2,7 @@
 {% block content %}
 <p>Pick a month:</p>
 <p><ul>
-{% for month in months %}
-    <li><a href='/time/month/{{ month|date:"Y-m" }}/'>{{ month|date:"Y-m" }}</li>
+{% for month, count in months %}
+    <li><a href='/time/month/{{ month|date:"Y-m" }}/'>{{ month|date:"Y-m" }} ({{ count }})</a></li>
 {% endfor %}
 {% endblock %}
