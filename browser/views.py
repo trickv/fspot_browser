@@ -34,11 +34,11 @@ def month(request, year_int, month_int):
     return render_to_response('photo_list.html', {'name':name, 'photos':photos})
 
 def photo(request, photo_id):
-    photo = models.get_photo_object(photo_id)
-    exif = render.utils.get_exif(photo['filename'])
+    photo = models.Photo.objects.get(id=photo_id)
+    exif = render.utils.get_exif(photo.file_path())
     if exif.has_key('MakerNote'):
         exif.pop('MakerNote')
-    photo['exif'] = exif
+    photo.exif = exif
     return render_to_response('photo.html', {'photo':photo})
 
 def _yearmonth_list():

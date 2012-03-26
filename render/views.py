@@ -8,8 +8,8 @@ import fspot.models as models
 import utils
 
 def raw(request, photo_id):
-    filename = models.get_photo_filename(photo_id)
-    image = Image.open(filename)
+    photo = models.Photo.objects.get(id=photo_id)
+    image = Image.open(photo.file_path())
     # TODO: determine mime type
     mime_type = 'image/jpeg'
     image_file = open(filename)
@@ -18,8 +18,8 @@ def raw(request, photo_id):
     return HttpResponse(data, mimetype=mime_type)
 
 def thumbnail(request, photo_id):
-    filename = models.get_photo_filename(photo_id)
-    image = Image.open(filename)
+    photo = models.Photo.objects.get(id=photo_id)
+    image = Image.open(photo.file_path())
 
     short_side = 132
 
@@ -40,8 +40,8 @@ def thumbnail(request, photo_id):
     return HttpResponse(data, mimetype='image/jpeg')
 
 def scale(request, photo_id, request_width):
-    filename = models.get_photo_filename(photo_id)
-    image = Image.open(filename)
+    photo = models.Photo.objects.get(id=photo_id)
+    image = Image.open(photo.file_path())
 
     width, height = image.size
     aspect = float(width) / float(height)

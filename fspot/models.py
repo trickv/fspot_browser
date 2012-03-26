@@ -1,3 +1,4 @@
+import os
 import datetime
 import sqlite3
 from django.db import models
@@ -5,14 +6,6 @@ from django.db import models
 ##### DEPRECATED
 # These functions should be replaced with querying the models themselves.
 db = sqlite3.connect('db/photos.db')
-
-def get_photo_filename(photo_id):
-    c = db.cursor()
-    c.execute("SELECT * FROM photos WHERE id = ?", (photo_id,))
-    row = c.fetchone()
-    uri = row[2] + '/' + row[3] # FIXME: conditionally do this
-    filename = uri.replace("file://", "")
-    return filename
 
 def get_tags_with_parent(parent_tag_id):
     c = db.cursor()
@@ -50,12 +43,6 @@ def get_photos_with_month(month):
     for row in c:
         photos.append({row[0]:row[4]})
     return photos
-
-def get_photo_object(photo_id):
-    c = db.cursor()
-    c.execute("SELECT * FROM photos WHERE id = ?", (photo_id,))
-    row = c.fetchone()
-    return {'id':photo_id, 'filename':get_photo_filename(photo_id), 'description':row[4]}
 
 def get_earliest_time():
     c = db.cursor()
@@ -138,6 +125,14 @@ class Photo(models.Model):
     default_version_id = models.IntegerField()
     rating = models.IntegerField(null=True, blank=True)
     tags = models.ManyToManyField(Tag, db_table='photo_tags')
+
+    def file_path(self):
+        file_path = self.base_uri.replace('file://', '')
+        if file_path[-1] != os.sep:
+            file_path += os.sep
+        file_path += self.filename
+        return file_path
+
     class Meta:
         db_table = u'photos'
 
