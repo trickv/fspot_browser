@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>{{ name }}</h1>
+<h3>{{ photos|length }} photos</h3>
 <div id='photos'>
 {% for photo in photos %}
     <table>
