@@ -15,6 +15,8 @@ def get_tags_with_parent(parent_tag_id):
         tags.append({row[0]:row[1]})
     return tags
 
+####### END OF DEPRECATED FUNCTIONS
+
 def get_photos_with_month(month):
     next_month_year = month.year
     if month.month == 12:
@@ -23,14 +25,8 @@ def get_photos_with_month(month):
     else:
         next_month_month = month.month + 1
     next_month = datetime.date(next_month_year, next_month_month, 1)
-    c = db.cursor()
-    c.execute("SELECT * FROM photos WHERE time BETWEEN ? AND ? ORDER BY time ASC", (month.strftime("%s"), next_month.strftime("%s")))
-    photos = []
-    for row in c:
-        photos.append({row[0]:row[4]})
+    photos = Photo.objects.filter(time__gte=month.strftime("%s"), time__lte=next_month.strftime("%s"))
     return photos
-
-####### END OF DEPRECATED FUNCTIONS
 
 class Export(models.Model):
     id = models.IntegerField(primary_key=True)
