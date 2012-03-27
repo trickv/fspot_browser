@@ -21,9 +21,9 @@ def tag_list(request):
     return render_to_response('tag_list.html', { 'tree': tree })
 
 def tag(request, tag_id):
+    tag = models.Tag.objects.get(id=tag_id)
     photos = models.get_photos_with_tag(tag_id)
-    name = models.get_tag_name(tag_id)
-    return render_to_response('photo_list.html', {'name':name, 'photos':photos})
+    return render_to_response('photo_list.html', {'name':tag.name, 'photos':photos})
 
 def month(request, year_int, month_int):
     year_int = int(year_int)

@@ -15,12 +15,6 @@ def get_tags_with_parent(parent_tag_id):
         tags.append({row[0]:row[1]})
     return tags
 
-def get_tag_name(tag_id):
-    c = db.cursor()
-    c.execute("SELECT name FROM tags WHERE id = ?", (tag_id,))
-    row = c.fetchone()
-    return row[0]
-
 def get_photos_with_tag(tag_id):
     c = db.cursor()
     c.execute("SELECT * FROM photos JOIN photo_tags ON (photos.id = photo_tags.photo_id) WHERE tag_id = ? ORDER BY time ASC", (tag_id,))
