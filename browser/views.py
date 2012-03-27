@@ -22,7 +22,7 @@ def tag_list(request):
 
 def tag(request, tag_id):
     tag = models.Tag.objects.get(id=tag_id)
-    photos = models.get_photos_with_tag(tag_id)
+    photos = tag.photo_set.all()
     return render_to_response('photo_list.html', {'name':tag.name, 'photos':photos})
 
 def month(request, year_int, month_int):

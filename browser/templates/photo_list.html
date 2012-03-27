@@ -2,13 +2,13 @@
 {% block content %}
 <h1>{{ name }}</h1>
 <div id='photos'>
-{% for id, comment in photos %}
+{% for photo in photos %}
     <table>
         <tr>
-            <td><a href='/photo/{{ id }}/'><img src='/render/{{ id }}/thumbnail/'></a></td>
+            <td><a href='/photo/{{ photo.id }}/'><img src='/render/{{ photo.id }}/thumbnail/'></a></td>
         </tr>
         <tr>
-            <td>{{ comment }}</td>
+            <td>{{ photo.description }}</td>
         </tr>
     </table>
 {% endfor %}
