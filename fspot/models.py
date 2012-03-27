@@ -50,6 +50,7 @@ class Export(models.Model):
     image_version_id = models.IntegerField()
     export_type = models.TextField()
     export_token = models.TextField()
+
     class Meta:
         db_table = u'exports'
 
@@ -59,6 +60,7 @@ class Jobs(models.Model):
     job_options = models.TextField()
     run_at = models.IntegerField(null=True, blank=True)
     job_priority = models.IntegerField()
+
     class Meta:
         db_table = u'jobs'
 
@@ -66,6 +68,7 @@ class Meta(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.TextField(unique=True)
     data = models.TextField(blank=True)
+
     class Meta:
         db_table = u'meta'
 
@@ -82,12 +85,14 @@ class PhotoVersion(models.Model):
     filename = models.TextField()
     import_md5 = models.TextField(blank=True)
     protected = models.BooleanField()
+
     class Meta:
         db_table = u'photo_versions'
 
 class Roll(models.Model):
     id = models.IntegerField(primary_key=True)
     time = models.IntegerField()
+
     class Meta:
         db_table = u'rolls'
 
@@ -98,6 +103,10 @@ class Tag(models.Model):
     is_category = models.BooleanField()
     sort_priority = models.IntegerField(null=True, blank=True)
     icon = models.TextField(blank=True)
+
+    def __repr__(self):
+        return "<Tag %d:%s>" % (self.id, self.name)
+
     class Meta:
         db_table = u'tags'
 
@@ -118,6 +127,9 @@ class Photo(models.Model):
             file_path += os.sep
         file_path += self.filename
         return file_path
+
+    def __repr__(self):
+        return "<Photo %d:%s>" % (self.id, self.filename)
 
     class Meta:
         db_table = u'photos'
