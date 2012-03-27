@@ -2,6 +2,7 @@ import datetime
 
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
+from django.db.models import Max, Min
 
 import fspot.models as models
 import render.utils
@@ -42,8 +43,8 @@ def photo(request, photo_id):
     return render_to_response('photo.html', {'photo':photo})
 
 def _yearmonth_list():
-    start = models.get_earliest_time()
-    end = models.get_newest_time()
+    start = datetime.datetime.fromtimestamp(models.Photo.objects.all().aggregate(Min('time'))['time__min'])
+    end = datetime.datetime.fromtimestamp(models.Photo.objects.all().aggregate(Max('time'))['time__max'])
     year = start.year
     month = start.month
     list = []

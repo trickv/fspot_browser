@@ -30,18 +30,6 @@ def get_photos_with_month(month):
         photos.append({row[0]:row[4]})
     return photos
 
-def get_earliest_time():
-    c = db.cursor()
-    c.execute("SELECT MIN(time) FROM photos")
-    row = c.fetchone()
-    return datetime.datetime.fromtimestamp(row[0])
-
-def get_newest_time():
-    c = db.cursor()
-    c.execute("SELECT MAX(time) FROM photos")
-    row = c.fetchone()
-    return datetime.datetime.fromtimestamp(row[0])
-
 ####### END OF DEPRECATED FUNCTIONS
 
 class Export(models.Model):
