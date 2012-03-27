@@ -3,20 +3,6 @@ import datetime
 import sqlite3
 from django.db import models
 
-##### DEPRECATED
-# These functions should be replaced with querying the models themselves.
-db = sqlite3.connect('db/photos.db')
-
-def get_tags_with_parent(parent_tag_id):
-    c = db.cursor()
-    c.execute("SELECT id, name FROM tags WHERE category_id = ? ORDER BY name", (parent_tag_id,))
-    tags = []
-    for row in c:
-        tags.append({row[0]:row[1]})
-    return tags
-
-####### END OF DEPRECATED FUNCTIONS
-
 def get_photos_with_month(month):
     next_month_year = month.year
     if month.month == 12:

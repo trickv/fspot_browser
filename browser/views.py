@@ -8,11 +8,11 @@ import fspot.models as models
 import render.utils
 
 def _get_subtags(tag_id):
-    tags = models.get_tags_with_parent(tag_id)
+    tags = models.Tag.objects.filter(category_id=tag_id).order_by('name')
     tree = []
     for tag in tags:
         tree.append(tag)
-        subtags = _get_subtags(tag.keys()[0])
+        subtags = _get_subtags(tag.id)
         if len(subtags) > 0:
             tree.append(subtags)
     return tree

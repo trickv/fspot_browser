@@ -42,8 +42,8 @@ def tag_tree(value, autoescape=None):
                 sublist = _helper(sublist_item, tabs+1)
                 sublist = '\n%s<ul>\n%s\n%s</ul>\n%s' % (indent, sublist,
                                                          indent, indent)
-            tag_id = title.keys()[0]
-            tag_name = title[tag_id]
+            tag_id = title.id
+            tag_name = title.name
             output.append("%s<li><a href='/tag/%d/'>%s</a>%s</li>" %
                 (indent, tag_id, tag_name, sublist))
             i += 1
