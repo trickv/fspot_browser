@@ -3,6 +3,6 @@
 <h1>{{ photo.id }}</h1>
 <h3>File: {{ photo.filename }}</h3>
 <p>{{ photo.exif }}</p>
-<p><img src='/render/{{ photo.id }}/scale/1024/'></p>
+<p><a href='/render/{{ photo.id }}/'><img src='/render/{{ photo.id }}/scale/1024/'></a></p>
 <p>{{ photo.description }}</p>
 {% endblock %}
