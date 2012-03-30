@@ -12,7 +12,7 @@ def raw(request, photo_id):
     image = Image.open(photo.file_path())
     # TODO: determine mime type
     mime_type = 'image/jpeg'
-    image_file = open(filename)
+    image_file = open(photo.file_path())
     data = image_file.read()
     image_file.close()
     return HttpResponse(data, mimetype=mime_type)
