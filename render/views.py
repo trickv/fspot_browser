@@ -8,6 +8,7 @@ import fspot.models as models
 import utils
 
 def raw(request, photo_id):
+    # FIXME: this function should detect rotation and compensate!
     photo = models.Photo.objects.get(id=photo_id)
     image = Image.open(photo.file_path())
     # TODO: determine mime type
