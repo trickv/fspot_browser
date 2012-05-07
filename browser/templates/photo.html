@@ -3,6 +3,11 @@
 <h1>{{ photo.id }}</h1>
 <h3>File: {{ photo.filename }}</h3>
 <p>{{ photo.exif }}</p>
+<p>{{ photo.tags.all }}</p>
+<p>
+    <a href='/hack/tag-best-2011/{{ photo.id }}/'>Tag as a <em>Best of 2011</em></a> or <a href='/hack/remove-best-tag/{{ photo.id }}/'>remove it</a>
+    or maybe <a href='/hack/add_tag/{{ photo.id }}/218/'>Tag for 2012 Calendar</a> or <a href='/hack/remove_tag/{{ photo.id }}/218/'>Remove that one too</a>.
+</p>
 <p><a href='/render/{{ photo.id }}/'><img src='/render/{{ photo.id }}/scale/1024/'></a></p>
 <p>{{ photo.description }}</p>
 {% endblock %}

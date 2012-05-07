@@ -1,6 +1,6 @@
 import datetime
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.db.models import Max, Min
 
@@ -23,8 +23,34 @@ def tag_list(request):
 
 def tag(request, tag_id):
     tag = models.Tag.objects.get(id=tag_id)
-    photos = tag.photo_set.all()
+    photos = tag.photo_set.all().order_by('time')
     return render_to_response('photo_list.html', {'name':tag.name, 'photos':photos})
+
+def hack_remove_best(request, photo_id):
+    p = models.Photo.objects.get(id=photo_id)
+    t = models.Tag.objects.get(id=253)
+    p.remove_tag(t)
+    return HttpResponseRedirect('/photo/%s/' % photo_id)
+
+def hack_remove_tag(request, photo_id, tag_id):
+    p = models.Photo.objects.get(id=photo_id)
+    t = models.Tag.objects.get(id=tag_id)
+    p.remove_tag(t)
+    return HttpResponseRedirect('/photo/%s/' % photo_id)
+
+def hack_best_2011(request, photo_id):
+    p = models.Photo.objects.get(id=photo_id)
+    t = models.Tag.objects.get(id=253)
+    p.tags.add(t)
+    p.save()
+    return HttpResponseRedirect('/photo/%s/' % photo_id)
+
+def hack_add_tag(request, photo_id, tag_id):
+    p = models.Photo.objects.get(id=photo_id)
+    t = models.Tag.objects.get(id=tag_id)
+    p.tags.add(t)
+    p.save()
+    return HttpResponseRedirect('/photo/%s/' % photo_id)
 
 def month(request, year_int, month_int):
     year_int = int(year_int)

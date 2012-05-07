@@ -4,6 +4,9 @@
 <h3>{{ photos|length }} photos</h3>
 <div id='photos'>
 {% for photo in photos %}
+    {% ifchanged photo.year_month %}
+        <h3>{{ photo.year_month|date:"Y-m" }}</h3>
+    {% endifchanged %}
     <table>
         <tr>
             <td><a href='/photo/{{ photo.id }}/'><img src='/render/{{ photo.id }}/thumbnail/'></a></td>
@@ -11,7 +14,15 @@
         <tr>
             <td>{{ photo.description }}</td>
         </tr>
+        <tr>
+            <td>{{ photo.get_datetime }}</td>
+        </tr>
     </table>
 {% endfor %}
+<pre>
+{% for photo in photos %}
+{{ photo.file_path }}
+{% endfor %}
+</pre>
 </div>
 {% endblock %}

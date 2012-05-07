@@ -101,6 +101,21 @@ class Photo(models.Model):
     def __repr__(self):
         return "<Photo %d:%s>" % (self.id, self.filename)
 
+    def get_datetime(self):
+        return datetime.datetime.fromtimestamp(self.time)
+
+    def year_month(self):
+        my_datetime = self.get_datetime()
+        return datetime.datetime(my_datetime.year, my_datetime.month, 1)
+
+    def remove_tag(self, tag):
+        if not isinstance(tag, Tag):
+            raise Exception("Must pass an instance of a tag (not a tag id)")
+        from django.db import connection, transaction
+        cursor = connection.cursor()
+        cursor.execute("DELETE FROM photo_tags WHERE photo_id = %s AND tag_id = %s", [self.id, tag.id])
+        transaction.commit_unless_managed()
+
     class Meta:
         db_table = u'photos'
 
